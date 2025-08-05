@@ -214,6 +214,31 @@
         .card-footer p {
             color: #666;
             font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
         
         .note {
@@ -229,15 +254,38 @@
             }
             
             .card-header {
-                padding: 25px 15px;
+                padding: 20px 15px;
             }
             
             .card-header h1 {
-                font-size: 22px;
+                font-size: 20px;
             }
             
             .info-value {
                 font-size: 16px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .button-container {
+                width: 100%;
+                margin-top: 10px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .copy-btn {
+                width: 100%;
+                margin-top: 8px;
+            }
+            
+            .social-icon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .card-footer {
+                padding: 15px;
             }
         }
     </style>
@@ -245,7 +293,10 @@
 <body>
     <div class="card">
         <div class="card-header">
-            <h1>MV EXPRESS</h1>
+            <div style="display: flex; justify-content: center; align-items: center; background: white; border-radius: 10px; padding: 10px; margin-bottom: 10px;">
+                <img src="06hsint4kh.png" alt="MV EXPRESS" style="height: 40px; width: auto;">
+                <h1 style="margin-left: 10px; margin-bottom: 0; font-size: 24px; color: #333;">MV EXPRESS</h1>
+            </div>
         </div>
         <div class="card-body">
             <div class="info-item">
@@ -255,7 +306,9 @@
                         <img src="mblhhf69d3.webp" alt="BML" class="icon" style="width: 24px; height: 24px;">
                         <span id="bank-account">7730000709839</span>
                     </div>
-                    <button class="copy-btn" onclick="copyToClipboard('bank-account')">Copy</button>
+                    <div>
+                        <button class="copy-btn" onclick="copyToClipboard('bank-account')">Copy</button>
+                    </div>
                 </div>
                 <div class="note">(Account Name: FATH.AZRA)</div>
             </div>
@@ -268,15 +321,23 @@
                         </button>
                         <span id="viber-number">7398822</span>
                     </div>
-                    <div>
+                    <div class="button-container">
                         <button class="copy-btn" onclick="copyToClipboard('viber-number')">Copy</button>
-                        <button class="copy-btn" style="margin-left: 5px; background-color: #7B519D;" onclick="openViberChat()">Open Viber</button>
+                        <button class="copy-btn" style="margin-top: 8px; background-color: #7B519D;" onclick="openViberChat()">Open Viber</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <p>Click the "Copy" button to copy the account number to clipboard.</p>
+            <p>Follow</p>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/share/14HS8RrD4PT/" target="_blank">
+                    <img src="https://public.youware.com/users-website-assets/prod/6e603986-1172-4738-9d79-21dfca8d9865/b12a639c555f451fb8db26bd540724c9.png" alt="Facebook" class="social-icon">
+                </a>
+                <a href="https://www.instagram.com/mvexpress_?igsh=MWhvNnRoMXNnNnI1MA==" target="_blank">
+                    <img src="https://public.youware.com/users-website-assets/prod/6e603986-1172-4738-9d79-21dfca8d9865/5ad67c387850447da172c434e1ac6a26.png" alt="Instagram" class="social-icon">
+                </a>
+            </div>
         </div>
     </div>
 
@@ -286,9 +347,12 @@
             const text = element.textContent;
             
             navigator.clipboard.writeText(text).then(function() {
-                // Show success animation
-                const buttons = element.parentElement.nextElementSibling.children;
-                const button = buttons[0]; // First button is Copy
+                // Find the copy button - locate the parent div with info-value class
+                const infoValue = element.closest('.info-value');
+                // Find the div containing the copy button
+                const buttonContainer = infoValue.querySelector('div:last-child');
+                // Get the copy button (first child in the container)
+                const button = buttonContainer.querySelector('.copy-btn');
                 const originalText = button.textContent;
                 
                 // Create and append success icon
@@ -297,7 +361,6 @@
                 button.style.width = button.offsetWidth + "px"; // Maintain button width
                 
                 // Animate info-value to show success state
-                const infoValue = element.closest('.info-value');
                 infoValue.style.borderColor = "#38a169";
                 infoValue.style.boxShadow = "0 0 0 1px rgba(56, 161, 105, 0.3)";
                 
